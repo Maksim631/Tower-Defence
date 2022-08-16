@@ -13,7 +13,7 @@ var current_wave = 0
 var enemies_in_wave = 0
 
 var base_health = 100
-
+var cash = 100
 
 func _ready():
 	map_node = $Map1
@@ -67,6 +67,8 @@ func initiate_build_mode(tower_type):
 		cancel_build_mode()
 	build_type = tower_type + "T1"
 	build_mode = true
+	if cash < GameData.tower_data[build_type]["price"]:
+		return
 	$UI.set_tower_preview(build_type, get_global_mouse_position())
 	
 func update_tower_preview():
@@ -95,5 +97,7 @@ func verify_and_build():
 		new_tower.position = build_location
 		new_tower.type = build_type
 		new_tower.category = GameData.tower_data[build_type]["category"]
+		cash -= GameData.tower_data[build_type]["price"]
+		$UI.set_cash(cash)
 		map_node.get_node("Turrets").add_child(new_tower, true)
 		map_node.get_node("TowerExclusion").set_cellv(build_tile, 5)

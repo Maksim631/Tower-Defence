@@ -3,6 +3,11 @@ extends CanvasLayer
 onready var hp_bar = $HUD/InfoBar/H/HP
 onready var hp_bar_tween = $HUD/InfoBar/H/HP/Tween
 
+
+
+func set_cash(amount): 
+	$HUD/InfoBar/H/Money.text = amount as String
+
 func set_tower_preview(tower_type, mouse_position): 
 	var drag_tower = load("res://Scenes/Turrets/" + tower_type + ".tscn").instance()
 	drag_tower.set_name("DragTower")
